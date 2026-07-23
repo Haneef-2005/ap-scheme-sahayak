@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ap-blue: #1A3A5C;
+  --color-ap-saffron: #F4A024;
+  --color-ap-slate: #F0F4F8;
+  --color-ap-text: #1A2633;
+  --color-ap-muted: #4A5568;
+  --color-ap-border: #E2E8F0;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  background: #F0F4F8;
+  color: #1A2633;
+}
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+.telugu { font-family: "Tiro Telugu", serif; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
