@@ -36,6 +36,11 @@ from datetime import datetime, timedelta, timezone
 app = FastAPI(
     title="AP Scheme Sahayak API"
 )
+@app.get("/")
+def root():
+    return {
+        "message": "AP Scheme Sahayak API is running"
+    }
 
 pwd_context = CryptContext(
     schemes=["bcrypt"],
