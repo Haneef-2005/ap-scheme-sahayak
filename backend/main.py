@@ -264,15 +264,17 @@ def check_eligibility(user: UserEligibility):
             
                 # Annual income check
 
+        # FIXED:
         min_annual_income = rules.get("min_annual_income", 0)
+        max_annual_income = rules.get("max_annual_income", 0)
 
-        if min_annual_income is not None and user.annual_income < min_annual_income:
+        if min_annual_income > 0 and user.annual_income < min_annual_income:
             print("FAILED: min income")
             eligible = False
 
-        if max_annual_income is not None and user.annual_income > max_annual_income:
+        if max_annual_income > 0 and user.annual_income > max_annual_income:
             print("FAILED: max income")
-            eligible = False        
+            eligible = False                
 
 
 
