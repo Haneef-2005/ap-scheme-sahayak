@@ -36,6 +36,16 @@ from datetime import datetime, timedelta, timezone
 app = FastAPI(
     title="AP Scheme Sahayak API"
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.get("/")
 def root():
     return {
@@ -105,16 +115,7 @@ def get_current_user(
             status_code=401,
             detail="Invalid or expired token"
         )
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
 
 
 @app.get("/")
