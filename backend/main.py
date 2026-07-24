@@ -203,21 +203,37 @@ def check_eligibility(user: UserEligibility):
     for scheme in schemes:
 
         rules = scheme.get("eligibility_rules", {})
+        
+        print("\n---------------------")
+        print("USER:")
+        print("age =", user.age)
+        print("income =", user.annual_income)
+        print("Checking:", scheme.get("name"))
+        print("gender =", user.gender)
+        print("occupation =", user.occupation)
+        print("social_category =", user.social_category)
+        print("bpl_card =", user.bpl_card)
+        print("district =", user.district)
+
+        print("RULES:")
 
         eligible = True
         match_score = 100
+        print(rules)
 
         # Age check
 
         min_age = rules.get("min_age")
 
         if min_age is not None and user.age < min_age:
-            eligible = False
+           print("FAILED: min_age")
+           eligible = False
 
 
         max_age = rules.get("max_age")
 
         if max_age is not None and user.age > max_age:
+            print("FAILED: max_age")
             eligible = False
             
             
@@ -226,7 +242,8 @@ def check_eligibility(user: UserEligibility):
         genders = rules.get("genders", [])
 
         if genders and user.gender not in genders:
-            eligible = False
+             print("FAILED: gender", user.gender, genders)
+             eligible = False         
             
             
 
@@ -236,6 +253,7 @@ def check_eligibility(user: UserEligibility):
         occupations = rules.get("occupations", [])
 
         if occupations and user.occupation not in occupations:
+            print("FAILED: occupation", user.occupation, occupations)
             eligible = False
 
 
@@ -248,20 +266,13 @@ def check_eligibility(user: UserEligibility):
 
         min_annual_income = rules.get("min_annual_income", 0)
 
-        if (
-            min_annual_income > 0        
-            and user.annual_income < min_annual_income
-        ):
+        if min_annual_income is not None and user.annual_income < min_annual_income:
+            print("FAILED: min income")
             eligible = False
 
-
-        max_annual_income = rules.get("max_annual_income", 0)
-
-        if (
-            max_annual_income > 0
-            and user.annual_income > max_annual_income
-        ):
-            eligible = False
+        if max_annual_income is not None and user.annual_income > max_annual_income:
+            print("FAILED: max income")
+            eligible = False        
 
 
 
@@ -272,10 +283,8 @@ def check_eligibility(user: UserEligibility):
             []
         )
 
-        if (
-            social_categories
-            and user.social_category not in social_categories
-        ):
+        if social_categories and user.social_category not in social_categories:
+            print("FAILED: social category", user.social_category, social_categories)
             eligible = False
 
 
@@ -283,10 +292,8 @@ def check_eligibility(user: UserEligibility):
 
         bpl_required = rules.get("bpl_required")
 
-        if (
-            bpl_required is True
-            and user.bpl_card is False
-        ):
+        if bpl_required is True and user.bpl_card is False:
+            print("FAILED: BPL")
             eligible = False
 
 
@@ -295,11 +302,12 @@ def check_eligibility(user: UserEligibility):
         districts = rules.get("districts", [])
 
         if districts and user.district not in districts:
+            print("FAILED: district", user.district, districts)
             eligible = False
 
 
         # Add eligible scheme
-
+        print("FINAL ELIGIBLE:", eligible)
         if eligible:
 
             scheme["_id"] = str(scheme["_id"])
